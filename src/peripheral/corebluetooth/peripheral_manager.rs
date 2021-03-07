@@ -23,9 +23,14 @@ use super::{
     characteristic_flags::get_properties_and_permissions,
     constants::{PERIPHERAL_MANAGER_DELEGATE_CLASS_NAME, PERIPHERAL_MANAGER_IVAR, POWERED_ON_IVAR},
     events::{
-        peripheral_manager_did_add_service_error, peripheral_manager_did_receive_read_request,
+        peripheral_manager_did_add_service_error,
+        peripheral_manager_central_did_subscribe_to_characteristic,
+        peripheral_manager_central_did_unsubscribe_from_characteristic,
+        peripheral_manager_is_ready_to_update_subscribers,
+        peripheral_manager_did_receive_read_request,
         peripheral_manager_did_receive_write_requests,
-        peripheral_manager_did_start_advertising_error, peripheral_manager_did_update_state,
+        peripheral_manager_did_start_advertising_error,
+        peripheral_manager_did_update_state,
     },
     ffi::{
         dispatch_queue_create, nil, CBAdvertisementDataLocalNameKey,
@@ -71,6 +76,21 @@ impl PeripheralManager {
                     sel!(peripheralManager:didAddService:error:),
                     peripheral_manager_did_add_service_error
                         as extern "C" fn(&mut Object, Sel, *mut Object, *mut Object, *mut Object),
+                );
+                decl.add_method(
+                    sel!(peripheralManager:central:didSubscribeToCharacteristic:),
+                    peripheral_manager_central_did_subscribe_to_characteristic
+                        as extern "C" fn(&mut Object, Sel, *mut Object, *mut Object, *mut Object),
+                );
+                decl.add_method(
+                    sel!(peripheralManager:central:didUnsubscribeFromCharacteristic:),
+                    peripheral_manager_central_did_unsubscribe_from_characteristic
+                        as extern "C" fn(&mut Object, Sel, *mut Object, *mut Object, *mut Object),
+                );
+                decl.add_method(
+                    sel!(peripheralManagerIsReadyToUpdateSubscribers:),
+                    peripheral_manager_is_ready_to_update_subscribers
+                        as extern "C" fn(&mut Object, Sel, *mut Object),
                 );
                 decl.add_method(
                     sel!(peripheralManager:didReceiveReadRequest:),

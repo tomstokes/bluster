@@ -76,6 +76,34 @@ pub extern "C" fn peripheral_manager_did_add_service_error(
     }
 }
 
+pub extern "C" fn peripheral_manager_central_did_subscribe_to_characteristic(
+    _delegate: &mut Object,
+    _cmd: Sel,
+    _peripheral: *mut Object,
+    _central: *mut Object,
+    _characteristic: *mut Object,
+) {
+    println!("peripheral_manager_central_did_subscribe_to_characteristic");
+}
+
+pub extern "C" fn peripheral_manager_central_did_unsubscribe_from_characteristic(
+    _delegate: &mut Object,
+    _cmd: Sel,
+    _peripheral: *mut Object,
+    _central: *mut Object,
+    _characteristic: *mut Object,
+) {
+    println!("peripheral_manager_central_did_unsubscribe_from_characteristic");
+}
+
+pub extern "C" fn peripheral_manager_is_ready_to_update_subscribers(
+    _delegate: &mut Object,
+    _cmd: Sel,
+    _peripheral: *mut Object,
+) {
+    println!("peripheral_manager_is_ready_to_update_subscribers");
+}
+
 pub extern "C" fn peripheral_manager_did_receive_read_request(
     _delegate: &mut Object,
     _cmd: Sel,
